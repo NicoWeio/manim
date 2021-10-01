@@ -28,11 +28,17 @@ RUN sudo apt-get update -qq \
 #         mathastext microtype ms physics preview ragged2e relsize rsfs \
 #         setspace standalone tipa wasy wasysym xcolor xetex xkeyval
 
-RUN pip install wheel
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+# auf gut Glück ↓
+# RUN pip install wheel
+
+# für pycairo und so ↓
+RUN sudo apt-get install -y python3-dev
+
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | POETRY_HOME=/etc/poetry sudo python3
 # RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python3 -
-ENV PATH="/home/gitpod/.poetry/bin:${PATH}"
+ENV PATH="/root/.poetry/bin:${PATH}"
 # hier ist der Code vmtl. noch nicht ausgecheckt ↓
 # RUN poetry install -E webgl_renderer
 #??? ↓
 # RUN source $HOME/.poetry/env
+CMD ["sudo", "su"]
